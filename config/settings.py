@@ -51,13 +51,21 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Local apps
+    'apps.accounts.apps.AccountsConfig',
+    'apps.investments.apps.InvestmentsConfig',
+    'apps.stocks.apps.StocksConfig',
+
+    # Third pary apps
+    'rest_framework',
+
+    # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
 ]
 
 MIDDLEWARE = [
