@@ -6,7 +6,7 @@ class Investment(models.Model):
     account_number = models.ForeignKey("accounts.Account", on_delete=models.CASCADE,
                                        related_name="investment_account_number")
     # 증권이 사라진다고 해도 투자내역은 남아있어야 하기 때문에 참조 무결성을 해치더라도 깂을 그대로 저장하도록 설정
-    investment_stock = models.ForeignKey("stocks.Stock", on_delete=models.DO_NOTHING,
+    investment_stock = models.ForeignKey("stocks.Stock", on_delete=models.DO_NOTHING, db_column='investment_stock_isin',
                                          related_name="user_investment_stock")
     investment_principal = models.PositiveIntegerField(verbose_name="투자 원금")
     quantity = models.PositiveIntegerField(verbose_name="투자 수량")
