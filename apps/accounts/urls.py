@@ -1,5 +1,7 @@
 from django.urls import path
 
-urlpatterns = [
+from .views import GetHoldingInvestListAPI
 
+urlpatterns = [
+    path('investments/', GetHoldingInvestListAPI.as_view()),
 ]

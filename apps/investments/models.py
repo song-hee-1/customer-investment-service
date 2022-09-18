@@ -12,6 +12,11 @@ class Investment(models.Model):
     quantity = models.PositiveIntegerField(verbose_name="투자 수량")
     investment_time = models.DateTimeField(auto_now_add=True, verbose_name="투자한 날짜")
 
+
+    @property
+    def market_value(self):
+        return self.quantity * self.investment_stock.current_price
+
     class Meta:
         verbose_name = "투자"
         verbose_name_plural = "투자 목록"
