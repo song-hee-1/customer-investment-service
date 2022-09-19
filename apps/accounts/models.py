@@ -13,7 +13,7 @@ class User(AbstractUser):
                                     help_text="휴대폰 번호는 다음과 같은 형식으로 입력해주세요 : 010-1234-5678")
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
 
     class Meta:
         verbose_name = "사용자"
