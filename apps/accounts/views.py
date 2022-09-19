@@ -1,7 +1,9 @@
 from rest_framework import generics
 
+from apps.accounts.models import Account
 from apps.investments.models import Investment
-from . serializers import StockHoldingSerializer
+
+from . serializers import StockHoldingSerializer, InvestDetailSerializer
 
 
 class GetHoldingInvestListAPI(generics.ListAPIView):
@@ -9,3 +11,8 @@ class GetHoldingInvestListAPI(generics.ListAPIView):
 
     def get_queryset(self):
         return Investment.objects.all()
+
+
+class GetDetailInvestAPI(generics.ListAPIView):
+    queryset = Account.objects.all()
+    serializer_class = InvestDetailSerializer
