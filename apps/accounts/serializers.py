@@ -3,7 +3,7 @@ from rest_framework import serializers
 from django.db.models import Sum, F
 
 from apps.investments.models import Investment
-from apps.accounts.models import Account
+from apps.accounts.models import Account, Transfer
 
 
 # 보유종목 화면 serializer
@@ -87,3 +87,15 @@ class InvestSerializer(serializers.ModelSerializer):
                 F('investment_account_number__investment_stock__current_price')
             ))[0]['account_total_asset']
         return total_asset
+
+
+class TransferInputSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transfer
+        fields = '__all__'
+
+
+class TransferOutputSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transfer
+        fields = ['transfer_identifier']
