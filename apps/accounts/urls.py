@@ -1,7 +1,9 @@
 from django.urls import path
 
-from .views import GetHoldingInvestListAPI, GetDetailInvestAPI
+from .views import GetHoldingInvestListAPI, GetDetailInvestAPI, GetInvestAPI
+
 urlpatterns = [
     path('investments/holdings', GetHoldingInvestListAPI.as_view()),
-    path('investments/', GetDetailInvestAPI.as_view()),
+    path('investments/detail', GetDetailInvestAPI.as_view()),
+    path('investments/', GetInvestAPI.as_view()),
 ]
