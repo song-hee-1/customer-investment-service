@@ -72,3 +72,5 @@ class Transfer(models.Model):
     user_name = models.CharField(max_length=40)
     transfer_amount = models.PositiveIntegerField()
     create_time = models.DateTimeField(auto_now_add=True)
+    signature = models.CharField(max_length=100, null=True)
+    status = models.BooleanField(default=False)

@@ -5,6 +5,8 @@ from django.db.models import Sum, F
 from apps.investments.models import Investment
 from apps.accounts.models import Account, Transfer
 
+import bcrypt
+
 
 # 보유종목 화면 serializer
 class StockHoldingSerializer(serializers.ModelSerializer):
@@ -92,7 +94,20 @@ class InvestSerializer(serializers.ModelSerializer):
 class TransferInputSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transfer
-        fields = '__all__'
+        exclude = ['signature', 'status']
+
+    def create(self, validated_data):
+        account_number = validated_data.get('account_number')
+        user_name = validated_data.get('user_name')
+        transfer_amount = validated_data.get('transfer_amount')
+
+        if None not in (account_number, user_name, transfer_amount):
+            # 입력받은 각 값은 문자형(유니코드)이므로 hash를 위해 바이트형으로 인코딩하고, DB에는 문자형(유니코드)로 저장
+            encode_signature = (str(account_number) + user_name + str(transfer_amount)).encode('utf-8')
+            encrypt_signature = bcrypt.hashpw(encode_signature, bcrypt.gensalt())
+            decode_signature = encrypt_signature.decode('utf-8')
+
+        return Transfer.objects.create(signature=decode_signature, **validated_data)
 
 
 class TransferOutputSerializer(serializers.ModelSerializer):

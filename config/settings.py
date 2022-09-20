@@ -58,6 +58,7 @@ INSTALLED_APPS = [
 
     # Third pary apps
     'rest_framework',
+    'django_crontab',
 
     # Django apps
     'django.contrib.admin',
@@ -152,3 +153,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+CRONJOBS = [
+    ('*/1 * * * *', 'apps.stocks.cron.crontab_stock_app_job', '>> ' +
+     os.path.join(BASE_DIR, 'config/log/cron.log')+' 2>&1 '),
+]
