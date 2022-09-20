@@ -1,15 +1,11 @@
 from rest_framework import serializers
 
-<<<<<<< HEAD
 from django.db.models import Sum, F
 
 from apps.investments.models import Investment
 from apps.accounts.models import Account, Transfer
 
 import bcrypt
-=======
-from apps.investments.models import Investment
->>>>>>> main
 
 
 # 보유종목 화면 serializer
