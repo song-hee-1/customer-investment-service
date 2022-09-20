@@ -48,14 +48,9 @@ class TransferAPI(generics.ListCreateAPIView):
         encode_signature = (str(account_number) + user_name + str(transfer_amount)).encode('utf-8')
         encrypt_signature = bcrypt.hashpw(encode_signature, bcrypt.gensalt())
 
-
         self.perform_create(input_serializer)
         output_serializer = TransferOutputSerializer(input_serializer.instance)
         headers = self.get_success_headers(output_serializer.data)
         return Response(output_serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
         # phase2 API
-        if not bcrypt.checkpw(password, diary_password):
-            msg = "비밀번호가 맞지 않거나 업데이트 할 수 없습니다."
-            raise ValidationError(msg)
-
