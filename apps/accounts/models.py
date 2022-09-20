@@ -33,7 +33,7 @@ class Account(models.Model):
     # 고객이 계좌에서 증권 회사를 확인할 수 있도록 증권 회사 삭제 불가능하도록 설정
     stock_securities = models.ForeignKey("StockSecurities", related_name="account_stock_securities",
                                          on_delete=models.PROTECT)
-    account_total_investment_principal = models.PositiveIntegerField(verbose_name="계좌별 투자 원금")
+    account_total_investment_principal = models.PositiveBigIntegerField(verbose_name="계좌별 투자 원금")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="계좌 생성 날짜")
     investment = models.ManyToManyField(
         'stocks.Stock',
