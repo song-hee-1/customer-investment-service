@@ -63,3 +63,14 @@ class StockSecurities(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# 입금 모델
+class Transfer(models.Model):
+    transfer_identifier = models.BigAutoField(primary_key=True)
+    account_number = models.IntegerField()
+    user_name = models.CharField(max_length=40)
+    transfer_amount = models.PositiveIntegerField()
+    create_time = models.DateTimeField(auto_now_add=True)
+    signature = models.CharField(max_length=100, null=True)
+    status = models.BooleanField(default=False)
