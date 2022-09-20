@@ -1,9 +1,10 @@
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from django.db.models import Sum, F
 
 from apps.investments.models import Investment
-from apps.accounts.models import Account, Transfer
+from apps.accounts.models import Account, Transfer, User
 
 import bcrypt
 
@@ -100,6 +101,15 @@ class TransferInputSerializer(serializers.ModelSerializer):
         account_number = validated_data.get('account_number')
         user_name = validated_data.get('user_name')
         transfer_amount = validated_data.get('transfer_amount')
+
+        if not Account.objects.filter(account_number=account_number).exists():
+            raise ValidationError('ERROR : 계좌번호가 유효하지 않습니다.')
+        if not User.objects.filter(username=user_name).exists():
+            raise ValidationError('ERROR : 사용자 이름이 유효하지 않습니다.')
+        # 입력받은 계좌 정보의 사용자 이름과 입력받은 사용자 이름이 일치하는지 확인
+        if Account.objects.filter(account_number=account_number).values(
+                'user_id__username')[0]['user_id__username'] != user_name:
+            raise ValidationError('ERROR : 계좌 명의가 일치하지 않습니다.')
 
         if None not in (account_number, user_name, transfer_amount):
             # 입력받은 각 값은 문자형(유니코드)이므로 hash를 위해 바이트형으로 인코딩하고, DB에는 문자형(유니코드)로 저장
