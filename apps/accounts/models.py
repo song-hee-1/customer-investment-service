@@ -13,7 +13,7 @@ class User(AbstractUser):
                                     help_text="휴대폰 번호는 다음과 같은 형식으로 입력해주세요 : 010-1234-5678")
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
 
     class Meta:
         verbose_name = "사용자"
@@ -63,3 +63,14 @@ class StockSecurities(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# 입금 모델
+class Transfer(models.Model):
+    transfer_identifier = models.BigAutoField(primary_key=True)
+    account_number = models.IntegerField()
+    user_name = models.CharField(max_length=40)
+    transfer_amount = models.PositiveIntegerField()
+    create_time = models.DateTimeField(auto_now_add=True)
+    signature = models.CharField(max_length=100, null=True)
+    status = models.BooleanField(default=False)
