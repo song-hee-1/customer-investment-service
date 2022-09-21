@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'apps.accounts.apps.AccountsConfig',
     'apps.investments.apps.InvestmentsConfig',
     'apps.stocks.apps.StocksConfig',
+    'apps.transfers.apps.TransfersConfig',
 
     # Third pary apps
     'rest_framework',
@@ -163,3 +164,9 @@ CRONJOBS = [
     ('10 9 * * *', 'apps.investments.cron.crontab_investment_app_job', '>> ' +
      os.path.join(BASE_DIR, 'config/log/cron.log') + ' 2>&1 '),
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
