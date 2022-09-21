@@ -6,6 +6,7 @@ from apps.investments.models import Investment
 from apps.accounts.serializers import StockHoldingSerializer, InvestDetailSerializer, InvestSerializer
 
 
+# 보유 종목 화면 API
 class GetHoldingInvestListAPI(generics.ListAPIView):
     serializer_class = StockHoldingSerializer
 
@@ -13,13 +14,15 @@ class GetHoldingInvestListAPI(generics.ListAPIView):
         return Investment.objects.all()
 
 
-class GetDetailInvestAPI(generics.ListAPIView):
-    queryset = Account.objects.all()
-    serializer_class = InvestDetailSerializer
-
-
+# 투자 화면 API
 class GetInvestAPI(generics.ListAPIView):
     queryset = Account.objects.all()
-    serializer_class = InvestSerializer
 
+    def get_serializer_class(self):
 
+        is_simple = self.request.GET.get('is_simple', None)
+
+        if is_simple:
+            return InvestSerializer
+        else:
+            return InvestDetailSerializer
