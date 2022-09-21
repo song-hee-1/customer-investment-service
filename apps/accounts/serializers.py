@@ -20,15 +20,6 @@ class StockHoldingSerializer(serializers.ModelSerializer):
         return obj.market_value
 
 
-# 투자상세 화면을 위한 Account 세부 serializer
-class AccountSerializer(serializers.ModelSerializer):
-    stock_securities = serializers.ReadOnlyField()
-
-    class Meta:
-        model = Account
-        fields = ['id', 'account_name', 'account_number', 'account_total_investment_principal', 'stock_securities']
-
-
 # 투자상세 화면 serializer
 class InvestDetailSerializer(serializers.ModelSerializer):
     # 계좌 총 자산
@@ -70,20 +61,12 @@ class InvestDetailSerializer(serializers.ModelSerializer):
         return round((total_profit / obj.account_total_investment_principal) * 100, 2)
 
 
-# 투자 화면 serializer
-class InvestSerializer(serializers.ModelSerializer):
-    # 계좌 총 자산
-    account_total_asset = serializers.SerializerMethodField(method_name='get_account_total_asset')
+# 투자 화면 serializer ( 투자 상세 화면 serializer를 상속받아 총 수익금, 수익률을 제외하여 사용 )
+class InvestSerializer(InvestDetailSerializer):
+    total_profit = None
+    rate_of_return = None
 
     class Meta:
         model = Account
         depth = 1
         exclude = ['user', 'create_time', 'investment', 'account_total_investment_principal']
-
-    def get_account_total_asset(self, obj):
-        total_asset = Account.objects.filter(id=obj.id).values('id').annotate(
-            account_total_asset=Sum(
-                F('investment_account_number__quantity') *
-                F('investment_account_number__investment_stock__current_price')
-            ))[0]['account_total_asset']
-        return total_asset
