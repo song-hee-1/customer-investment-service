@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'apps.accounts.apps.AccountsConfig',
     'apps.investments.apps.InvestmentsConfig',
     'apps.stocks.apps.StocksConfig',
+    'apps.transfers.apps.TransfersConfig',
 
     # Third pary apps
     'rest_framework',
