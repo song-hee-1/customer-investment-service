@@ -64,9 +64,12 @@ class TransferSerializer(serializers.ModelSerializer):
         signature = validated_data.get('signature')
         encode_signature = signature.encode('utf-8')  # checkpw 이용을 위한 인코딩
 
-        account_number = Transfer.objects.filter(signature=signature).values()[0]['account_number']
-        user_name = Transfer.objects.filter(signature=signature).values()[0]['user_name']
-        transfer_amount = Transfer.objects.filter(signature=signature).values()[0]['transfer_amount']
+        try:
+            account_number = Transfer.objects.filter(signature=signature).values()[0]['account_number']
+            user_name = Transfer.objects.filter(signature=signature).values()[0]['user_name']
+            transfer_amount = Transfer.objects.filter(signature=signature).values()[0]['transfer_amount']
+        except Exception as e:
+            raise ValidationError(f"ERROR : 유효하지 못한 데이터입니다.")
 
         decryption = \
             str(account_number).encode('utf-8') + user_name.encode('utf-8') + str(transfer_amount).encode('utf-8')
