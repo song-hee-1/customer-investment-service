@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
-import json
+# import json
 from pathlib import Path
 
-from django.core.exceptions import ImproperlyConfigured
+# from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,27 +25,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # secret key 관리를 위한 secrets.json 파일 위치
-secret_file = os.path.join(BASE_DIR, 'secrets.json')
+# secret_file = os.path.join(BASE_DIR, 'secrets.json')
 
-with open(secret_file) as f:
-    secrets = json.loads(f.read())
-
-
-def get_secret(setting):
-    """비밀 변수를 가져오거나 명시적 예외를 반환한다."""
-    try:
-        return secrets[setting]
-    except KeyError:
-        error_msg = "Set the {} environment variable".format(setting)
-        raise ImproperlyConfigured(error_msg)
+# with open(secret_file) as f:
+#     secrets = json.loads(f.read())
 
 
-SECRET_KEY = get_secret("SECRET_KEY")
+# def get_secret(setting):
+#     """비밀 변수를 가져오거나 명시적 예외를 반환한다."""
+#     try:
+#         return secrets[setting]
+#     except KeyError:
+#         error_msg = "Set the {} environment variable".format(setting)
+#         raise ImproperlyConfigured(error_msg)
+
+
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     # Third pary apps
     'rest_framework',
     'django_crontab',
+    'corsheaders',
 
     # Django apps
     'django.contrib.admin',
@@ -72,6 +73,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -108,9 +111,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'fint',
-        'USER': get_secret('USER'),
-        'PASSWORD': get_secret('PASSWORD'),
-        'HOST': get_secret('HOST'),
+        'USER': os.environ['DBUSER'],
+        'PASSWORD': os.environ['DBPASS'],
+        'HOST': os.environ['DBHOST'],
         'PORT': '5432',
     }
 }
@@ -150,7 +153,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -174,3 +182,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ]
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CSRF_TRUSTED_ORIGINS = ['https://*.azurewebsites.net']
