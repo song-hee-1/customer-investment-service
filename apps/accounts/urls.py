@@ -1,8 +1,5 @@
-from django.urls import path
-
-from apps.accounts.views import GetHoldingInvestListAPI, GetInvestAPI
+from django.urls import path, include
 
 urlpatterns = [
-    path('investments/holdings', GetHoldingInvestListAPI.as_view()),
-    path('investments/', GetInvestAPI.as_view()),
+
 ]
