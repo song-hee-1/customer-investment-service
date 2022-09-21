@@ -35,6 +35,7 @@ class TransferViewTestCase(APITestCase):
         Transfer.objects.create(account_number=123123, user_name="핑핑이언니", transfer_amount=1000000,
             signature="$2b$12$i2OPTqk9NC8YrUnuBb4RpepwLKdx8kzhqxxvtsWv0c3ESxik2oLju"
         )
+        self.client.login(email='test@test.com', password='0000')
 
     def test_phase1_fail_not_exists_user(self):
         data = {

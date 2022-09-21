@@ -15,6 +15,7 @@ class InvestmentViewTestCase(APITestCase):
         User.objects.create_user(
             username='핑핑이언니', password='0000', email="test@test.com", phone_number='010-1234-5678'
         )
+        self.client.login(email='test@test.com', password='0000')
         StockSecurities.objects.create(
             name="핑핑증권사"
         )
