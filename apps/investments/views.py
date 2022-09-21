@@ -8,15 +8,21 @@ from apps.investments.serializers import StockHoldingSerializer, InvestDetailSer
 
 # 보유 종목 화면 API
 class GetHoldingInvestListAPI(generics.ListAPIView):
-    serializer_class = StockHoldingSerializer
 
     def get_queryset(self):
-        return Investment.objects.all()
+        user = self.request.user
+        queryset = Investment.objects.filter(account_id__user_id=user.id)
+        return queryset
+
+    serializer_class = StockHoldingSerializer
 
 
 # 투자 화면 API
 class GetInvestAPI(generics.ListAPIView):
-    queryset = Account.objects.all()
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Account.objects.filter(user_id=user.id)
+        return queryset
 
     def get_serializer_class(self):
 

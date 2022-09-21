@@ -164,3 +164,9 @@ CRONJOBS = [
     ('10 9 * * *', 'apps.investments.cron.crontab_investment_app_job', '>> ' +
      os.path.join(BASE_DIR, 'config/log/cron.log') + ' 2>&1 '),
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
