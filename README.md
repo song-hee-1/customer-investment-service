@@ -214,7 +214,7 @@ URL|Method|Description|
 ## TIL
 
 - [[TIL] ModuleNotFoundError: No module named ‘django’ 에러 해결하기](https://medium.com/@heeee/til-modulenotfounderror-no-module-named-django-%EC%97%90%EB%9F%AC-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0-c00bb1a96682)
-- [[[TIL] DRF serializer에서 외래키 테이블의 필드 가져오기](https://medium.com/@heeee/til-drf-serializer%EC%97%90%EC%84%9C-%EC%99%B8%EB%9E%98%ED%82%A4-%ED%85%8C%EC%9D%B4%EB%B8%94%EC%9D%98-%ED%95%84%EB%93%9C-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0-242c06b25dc2)
+- [[TIL] DRF serializer에서 외래키 테이블의 필드 가져오기](https://medium.com/@heeee/til-drf-serializer%EC%97%90%EC%84%9C-%EC%99%B8%EB%9E%98%ED%82%A4-%ED%85%8C%EC%9D%B4%EB%B8%94%EC%9D%98-%ED%95%84%EB%93%9C-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0-242c06b25dc2)
 
 
 
