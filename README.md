@@ -84,7 +84,7 @@
 > 				* 보유 종목의 자산군
 > 				* 보유 종목의 평가 금액 ( 종목 보유 수량 * 종목 현재가 )
 > 				* 보유 종목 ISIN
-> * **투자금 입금**
+> *  **투자금 입금**
 > 		* 투자금 입금은 2 phase로 이루어짐
 > 
 > 		**Phase1 API**
@@ -96,7 +96,7 @@
 > 
 > 			* 응답 데이터
 > 				* 거래정보 식별자 - 요청 데이터 묶음을 식별할 수 있는 key 값
-
+>
 > 		**Phase2 API**
 > 		* phase1에서 등록한 거래정보 검증 후 실제 고객의 자산 업데이트
 > 		* 거래 정보를 hashing하여 서버에 phase2 요청을 하면 서버에서는 phase1에서 등록하여 저장된 데이터를 hashing하여 동일한 데이터에 대한 요청인지 검증
@@ -184,15 +184,18 @@
 		- 요청 데이터와 응답 데이터 처리를 위하여 다른 serializer를 이용
 	- phase 2 
 		- phase1에서 DB에 저장한 hashing(signature)값과 각 필드의 값을 연결한 string이 같은지 확인
-		-  값이 틀린다면 자산 업데이트 없이 실패 응답
-		- 값이 일치한다면 계좌의 투자원금값을 더하고, 투자 테이블에 현금자산(asset_group_id=7) 내역 추가
+		- 값이 틀린다면 자산 업데이트 없이 실패 응답
+		- 값이 일치한다면 계좌 테이블의 `account_total_investment_principal(투자원금)`값에 `transfer amount(입금금액)`을 더하고, `투자 테이블`에 `현금자산(asset_group_id=7)` 내역 추가
+		- 성공적으로 자산을 업데이트한다면 `transfer status`를 1(true)로 업데이트 처리하여 여러번 눌러도 한번만 처리 되도록 처리
+
 </br>
 
 ## API ENDPOINT
 
 ### investments
+
 URL|Method|Description|
-|------|---|---|---|
+|------|---|---|
 |"api/investments"|GET|로그인 한 고객의 투자상세 화면 |
 |"api/investments?is_simple=true"|GET|로그인 한 고객의 투자 화면(is_simple parameter 이용) |
 |"api/investments/holdings"|GET|로그인 한 고객의 보유종목 화면
@@ -201,10 +204,12 @@ URL|Method|Description|
 ### transfers
 
 URL|Method|Description|
-|------|---|---|---|
+|------|---|---|
 |"api/transfers-verifications"|POST|phase1 : 입금 거래 정보를 서버에 등록 |
 |"api/transfers"|POST|phase2: phase1에서 등록한 거래정보를 토대로 고객 자산 업데이트 |
+
 - 단, phase2에서는 자산 업데이트 성공시 status 및 관련 테이블 값만 업데이트
+
 
 
 </br>
