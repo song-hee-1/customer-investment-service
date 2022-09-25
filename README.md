@@ -17,7 +17,7 @@
       - [🛠 API Test](#-api-test)
   * [프로젝트 분석](#프로젝트-분석)
   * [API ENDPOINT](#api-endpoint)
-  * [Troubleshooting](#troubleshooting)
+  * [TIL](#til)
 
 
 </br>
