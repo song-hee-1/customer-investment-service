@@ -131,13 +131,13 @@
 - 주어진 데이터 외 서비스 흐름을 고려하여 `User(사용자)`, `Account(계좌)`, `Stock Securities(증권사)`, `Stock(증권)`, `Assget Group(자산군)`, )`Transfer(입금)`의 테이블로 모델링
 
 	- 한`User(사용자)`는 **여러 개**의 `Account(증권계좌)`를 가질 수 있음 (실제 서비스에서 이를 확인하여 적용)
-	- `Stock Securities(증권사)`와 `Assget Group((자산군)`은 데이터의 추가 및 수정이 용이하도록 **외래키**를 이용하여 참조
+	- `Stock Securities(증권사)`와 `Assget Group(자산군)`은 데이터의 추가 및 수정이 용이하도록 **외래키** 를 이용하여 참조
 	- 가격 변동이 많은 `Stock(증권)`의 가격의 특성을 고려하여 stock에 current_price를 이용하여 값들 계산하도록 정의
-	- `Stock(증권)`의 **기본키(PK)**는 **국제 증권 식별 번호**인 **isin**를 이용
+	- `Stock(증권)`의 **기본키(PK)** 는 **국제 증권 식별 번호**인 **isin**를 이용
 
 	- `Account`와 `Stock`는 **다대다(M:N)관계**이며,  수량과 투자 시간, 투자 원금에 대한 **정보**를 **추가**로 나타내기 위하여 `investment`라는 **중간 테이블** 정의
 
-- 각 데이터의 특성을 고려하여 `IntegerField `, `PositiveIntegerField `,  `PositiveBigIntegerField `를 나누어 사용
+- 각 데이터의 특성을 고려하여 `IntegerField `, `PositiveIntegerField `,  `PositiveBigIntegerField`를 나누어 사용
 
 </br>
 
